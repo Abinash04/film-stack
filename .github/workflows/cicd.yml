@@ -32,8 +32,15 @@ jobs:
           git config --global user.name "Abinash04"
           git commit -am "Update version to ${{ steps.version.outputs.version }}"
 
-      - name: Deploy to GitHub Pages
-        uses: Abinash04/film-stack@latest
+      - name: Create GitHub release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{github.run_number}}
+          release_name: Release ${{github.run_number}}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Deploy to GitHub pages
+        uses: Abinash04/film-stack@v${{github.run_number}}
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages

@@ -15,9 +15,9 @@ jobs:
 
       # setup nodejs environment
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v3
         with:
-          node-version: "18.16.1"
+          node-version: "18.x"
 
       - name: Install dependencies
         run: npm install
@@ -45,10 +45,29 @@ jobs:
       #     release_name: Release ${{github.run_number}}
       #     ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Deploy to GitHub pages
-        uses: Abinash04/film-stack@v1
+      # - name: Deploy to GitHub pages
+      #   uses: Abinash04/film-stack@v1
+      #   with:
+      #     ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      #     BRANCH: gh-pages
+      #     FOLDER: build
+      #     CLEAN: true
+
+      - name: Deploy to GitHub Pages
+        uses: actions/checkout@v3
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: build
-          CLEAN: true
+          ref: gh-pages
+
+      - name: Copy build artifacts
+        run: |
+          cp -r build/* .
+
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "Abinash04"
+          git config user.email "abinash.behera04@gmail.com"
+          git add .
+          git commit -m "Deploy build from ${GITHUB_SHA}"
+          git push origin gh-pages

@@ -23,7 +23,7 @@ jobs:
       #   run: npm test -- --coverage
       - name: Generate Version Number
         id: version
-        run: echo "::set-output name=version::0.1.${{ github.run_number }}"
+        run: echo "::set-output name=version::0.1.0"
 
       - name: Update Version in package.json
         run: |
@@ -33,7 +33,7 @@ jobs:
           git commit -am "Update version to ${{ steps.version.outputs.version }}"
 
       - name: Deploy to GitHub Pages
-        uses: Abinash04/film-stack@0.1.${{ github.run_id }}
+        uses: Abinash04/film-stack@0.1.0
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages

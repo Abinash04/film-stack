@@ -13,6 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # setup nodejs environment
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: "18.16.1"
+
       - name: Install dependencies
         run: npm install
 
@@ -21,28 +27,28 @@ jobs:
 
       # - name: Test
       #   run: npm test -- --coverage
-      - name: Generate Version Number
-        id: version
-        run: echo "::set-output name=version::0.1.0"
+      # - name: Generate Version Number
+      #   id: version
+      #   run: echo "::set-output name=version::0.1.0"
 
-      - name: Update Version in package.json
-        run: |
-          npm version ${{ steps.version.outputs.version }}
-          git config --global user.email "abinash.behera04@gmail.com"
-          git config --global user.name "Abinash04"
-          git commit -am "Update version to ${{ steps.version.outputs.version }}"
+      # - name: Update Version in package.json
+      #   run: |
+      #     npm version ${{ steps.version.outputs.version }}
+      #     git config --global user.email "abinash.behera04@gmail.com"
+      #     git config --global user.name "Abinash04"
+      #     git commit -am "Update version to ${{ steps.version.outputs.version }}"
 
-      - name: Create GitHub release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{github.run_number}}
-          release_name: Release ${{github.run_number}}
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-
-      # - name: Deploy to GitHub pages
-      #   uses: Abinash04/film-stack@v1
+      # - name: Create GitHub release
+      #   uses: actions/create-release@v1
       #   with:
+      #     tag_name: ${{github.run_number}}
+      #     release_name: Release ${{github.run_number}}
       #     ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-      #     BRANCH: gh-pages
-      #     FOLDER: build
-      #     CLEAN: true
+
+      - name: Deploy to GitHub pages
+        uses: Abinash04/actions-gh-pages@v1
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
+          CLEAN: true

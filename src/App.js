@@ -4,8 +4,6 @@ import "./App.css";
 // import Autocomplete from "@mui/material/Autocomplete";
 // import top100Films from "./data/top100";
 import RoundedSearchBox from "./components/searchBox";
-import requests from "./requests";
-import Row from "./components/row";
 import MyMoviesList from "./components/MyMoviesList";
 
 function App() {

@@ -3,11 +3,9 @@ import React, { useState, useEffect } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import { TextField, InputAdornment, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import top100Films from "../data/top100";
 import axios from "./axios";
 import requests from "../requests";
 import Row from "./row";
-import { textAlign } from "@mui/system";
 
 const RoundedSearchBox = () => {
   const [options, setOptions] = useState([]);

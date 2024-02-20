@@ -40,7 +40,7 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Deploy to GitHub pages
-        uses: Abinash04/film-stack@v${{github.run_number}}
+        uses: Abinash04/film-stack@v1
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages

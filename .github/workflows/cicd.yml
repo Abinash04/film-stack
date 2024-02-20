@@ -1,0 +1,41 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      # - name: Test
+      #   run: npm test -- --coverage
+      - name: Generate Version Number
+        id: version
+        run: echo "::set-output name=version::1.0.${{ github.run_number }}"
+
+      - name: Update Version in package.json
+        run: |
+          npm version ${{ steps.version.outputs.version }}
+          git config --global user.email "abinash.behera04@gmail.com"
+          git config --global user.name "Abinash04"
+          git commit -am "Update version to ${{ steps.version.outputs.version }}"
+
+      - name: Deploy to GitHub Pages
+        uses: Abinash04/film-stack@4.2.0
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
+          CLEAN: true

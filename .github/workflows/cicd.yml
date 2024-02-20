@@ -33,7 +33,7 @@ jobs:
           git commit -am "Update version to ${{ steps.version.outputs.version }}"
 
       - name: Deploy to GitHub Pages
-        uses: Abinash04/film-stack@4.2.0
+        uses: Abinash04/film-stack@1.0.${{ github.run_number }}
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
